@@ -1,12 +1,29 @@
-﻿Class GUI {
+﻿[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+[void][System.Reflection.Assembly]::LoadWithPartialName( “Microsoft.VisualBasic”)
 
+Class GUI {
+
+#Window member variables
 [Int]$Height
 [Int]$Width
 [String]$Position
 [String]$Title
 $Form
 
-    GUI($Height, $Width, $Position, $Title){
+#Label Member variables
+[Int]$LabelHeight
+[Int]$LabelWidth
+[Int]$XPos
+[Int]$YPos
+[String]$LabelTextPosition
+[String]$LabelText
+$Label
+
+    GUI(){
+        
+    }
+
+    SetWindowSize($Height, $Width, $Position, $Title){
 
         $this.Height = $Height
         $this.Width = $Width
@@ -15,7 +32,7 @@ $Form
 
     }
 
-    [Void]CreateWindow(){
+    [GUI]CreateWindow(){
 
         $this.Form = New-Object System.Windows.Forms.Form    
         $this.Form.Size = New-Object System.Drawing.Size($this.Height, $this.Width)
@@ -27,6 +44,8 @@ $Form
         $this.Form.ControlBox = $True
         $this.Form.StartPosition = $this.Position
         $this.Form.Font = "Segoe UI"
+
+        return $this
     }
 
     [Void]Display() {
@@ -45,6 +64,7 @@ Class Label : GUI {
 [String]$LabelTextPosition
 [String]$LabelText
 $Label
+$TempForm
 
     Label($LabelHeight, $LabelWidth, $LabelTextPosition, $LabelText, $XPos, $YPos){
 
@@ -69,7 +89,11 @@ $Label
 
     [Void]AddLabel(){
 
-        $This.Form.Controls.Add($this.Label)
+        $this.TempForm = [GUI]$this.Form
+
+        $this.TempForm.Controls.Add($this.Label)
+
+        #([GUI]$this.Form.Controls.Add($this.Label))
     }
 
 }
@@ -78,10 +102,10 @@ $X = New-Object GUI -ArgumentList 1000, 1000, "CenterScreen", "Test"
 
 $X.CreateWindow()
 
-$Y = New-Object -TypeName Label -ArgumentList 100, 100, "MiddleCenter", "Test", 100, 100
+#$Y = New-Object -TypeName Label -ArgumentList 100, 100, "MiddleCenter", "Test", 100, 100
 
-$Y.CreateLabel()
-$Y.AddLabel()
+#$Y.CreateLabel()
+#$Y.AddLabel()
 
 $X.Display()
 
@@ -96,7 +120,6 @@ $Form.MinimizeBox = $True
 $Form.ControlBox = $True
 $Form.StartPosition = "CenterScreen"
 $Form.Font = "Segoe UI"
-
 $Label = New-Object System.Windows.Forms.Label
 $Label.Location = New-Object System.Drawing.Size(8,8)
 $Label.Size = New-Object System.Drawing.Size(240,32)
