@@ -1,4 +1,19 @@
-﻿function Upload-SFTP{
+﻿<#
+.Synopsis
+A script that Uploads files to a remote SFTP source. 
+
+.Parameter Name
+The host name of the FTP source. It SHOULD NOT be a URL, and should not include any "/" characters. "." is an acceptable character.
+
+.Parameter SSHKey
+This is the SSH key that helps to authenticate this script. This can be retrieved through PuTTY.
+
+.Notes
+Author: Connor James LaFleur
+Copyright: Connor James LaFleur, 2/20/18 1:38PM Eastern Time
+#>
+
+function Upload-SFTP{
 
         Param(
 
